@@ -1,0 +1,61 @@
+{
+  "name": "blog-frontend",
+  "version": "1.0.0",
+  "author": "zzy",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4173",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.0.9",
+    "@kangc/v-md-editor": "^2.3.15",
+    "@vue/reactivity": "^3.2.39",
+    "@vue/shared": "^3.2.39",
+    "@waline/client": "^2.7.1",
+    "animate.css": "^4.1.1",
+    "axios": "^0.27.2",
+    "element-plus": "^2.2.17",
+    "highlight.js": "^11.6.0",
+    "lazysizes": "^5.3.2",
+    "pinia": "^2.0.16",
+    "vue": "^3.2.37",
+    "vue-router": "^4.1.2",
+    "vue-waterfall-plugin-next": "^2.1.7"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@rushstack/eslint-patch": "^1.1.0",
+    "@vitejs/plugin-vue": "^3.0.1",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "commitizen": "^4.2.5",
+    "cz-customizable": "^6.9.1",
+    "eslint": "^8.5.0",
+    "eslint-plugin-vue": "^9.0.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.5.1",
+    "sass": "^1.54.3",
+    "sass-loader": "^13.0.2",
+    "vite": "^3.0.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-customizable"
+    }
+  },
+  "lint-staged": {
+    "*.{scss,vue}": [
+      "stylelint --fix"
+    ],
+    "*.{js,ts,vue}": [
+      "vue-cli-service lint"
+    ]
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged",
+    "commit-msg": "commitlint -eV"
+  }
+}
