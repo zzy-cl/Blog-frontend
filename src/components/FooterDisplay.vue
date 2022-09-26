@@ -19,8 +19,11 @@
 </template>
 
 <script setup>
-import {ref} from 'vue';
+import {ref, watch} from 'vue';
 import {updateTotalCount} from "@/api/other";
+import {useStore} from "@/stores/app";
+
+const store = useStore()
 
 // 运行时间
 let BootDate = new Date("2022/05/29 00:00:00");
@@ -42,17 +45,18 @@ const total_count = ref('')
 const getTotalCount = () => {
   if (!sessionStorage.getItem('total_count')) {
     updateTotalCount().then(res => {
-      console.log(res.data.data[1][0]['total_count'])
-      sessionStorage.setItem('total_count', String(res.data.data[1][0]['total_count']))
-      total_count.value = sessionStorage.getItem('total_count')
+      if (res.data.data) {
+        sessionStorage.setItem('total_count', String(res.data.data[1][0]['total_count']))
+        total_count.value = sessionStorage.getItem('total_count')
+      }
     })
   } else {
     total_count.value = sessionStorage.getItem('total_count')
   }
 }
-setTimeout(() => {
+watch(() => store.token, () => {
   getTotalCount()
-}, 200)
+}, {deep: true, immediate: true})
 </script>
 
 <style lang="scss" scoped>

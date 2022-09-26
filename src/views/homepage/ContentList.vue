@@ -1,5 +1,5 @@
 <!--author: zzy-->
-<!---->
+<!--首页列表-->
 <template>
   <div>
     <!--首页头部旋转球球-->
@@ -71,10 +71,12 @@
 
 <script setup>
 import {getArticlesFe, getArticleTagsFe} from "../../api/content";
-import {reactive, ref} from "vue";
+import {reactive, ref, watch} from "vue";
 import {useRouter} from 'vue-router'
+import {useStore} from "@/stores/app";
 
 const router = useRouter()
+const store = useStore()
 
 // 分页
 const limitForm = reactive({
@@ -99,9 +101,10 @@ const onSubmit = () => {
     limitForm.pageNum = Number(sessionStorage.getItem('pageNum'))
   }
   getArticlesFe(limitForm).then(res => {
-    console.log(res)
-    count.value = res.data.data[0][0]["COUNT(*)"]
-    tableData.value = res.data.data[1]
+    if (res.data.data) {
+      count.value = res.data.data[0][0]["COUNT(*)"]
+      tableData.value = res.data.data[1]
+    }
     for (let i = 0; i < tableData.value.length; i++) {
       tableData.value[i].tagnames = ''
       getArticleTagsFe(tableData.value[i]).then(res => {
@@ -116,9 +119,10 @@ const onSubmit = () => {
     }
   })
 }
-setTimeout(() => {
+// 监听，当获取到token时，在进行发送请求
+watch(() => store.token, () => {
   onSubmit()
-}, 200)
+}, {deep: true, immediate: true})
 
 const getArticleFeInfo = (item) => {
   // 不会添加history记录，无法回退
