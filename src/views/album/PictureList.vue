@@ -230,4 +230,3 @@ onBeforeUnmount(() => {
   transition: all 0.3s linear;
 }
 </style>
-

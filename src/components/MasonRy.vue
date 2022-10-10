@@ -27,10 +27,10 @@ const breakpoints = {
     rowPerView: 1,
   }
 }
-const list =ref([])
-getAlbumPictureList({album_id:3}).then(res=>{
+const list = ref([])
+getAlbumPictureList({album_id: 3}).then(res => {
   console.log(res)
-  list.value=res.data.data
+  list.value = res.data.data
 })
 
 </script>
@@ -41,7 +41,8 @@ getAlbumPictureList({album_id:3}).then(res=>{
   display: flex;
   justify-content: center;
 }
-.el-image{
+
+.el-image {
   border-radius: 10px;
 }
 </style>
